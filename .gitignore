@@ -1,0 +1,21 @@
+# بيئة وأسرار
+.env
+*.env
+venv/
+.venv/
+__pycache__/
+*.pyc
+
+# ملفات تشغيل telegram-bot-api المحلي
+td/
+telegram-bot-api/
+tg-bot-api-data/
+
+# ملفات نظام
+.DS_Store
+*.log
+
+# ذاكرة التخزين المؤقت لـ Replit
+.cache/
+.config/
+.upm/

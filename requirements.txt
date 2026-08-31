@@ -1,0 +1,6 @@
+aiohttp
+pillow
+yarl
+playwright
+curl_cffi
+pillow-heif
