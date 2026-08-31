@@ -4,3 +4,9 @@ yarl
 playwright
 curl_cffi
 pillow-heif
+aiohttp
+curl_cffi
+pillow
+pillow-heif
+playwright
+yarl

@@ -7,3 +7,4 @@ BOT_API_BASE = "http://127.0.0.1:8081"
 
 [nix]
 channel = "stable-25_05"
+packages = ["freetype", "gitFull", "lcms2", "libaom", "libde265", "libheif", "libimagequant", "libjpeg", "libtiff", "libwebp", "libxcrypt", "nasm", "openjpeg", "playwright-driver", "tcl", "tk", "x265", "zlib"]
