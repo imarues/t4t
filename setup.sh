@@ -16,7 +16,9 @@ if [ ! -f "./telegram-bot-api/telegram-bot-api" ]; then
   mkdir -p build
   cd build
   cmake -DCMAKE_BUILD_TYPE=Release .. 
-  cmake --build . --target install -j 2
+  # Replit workspaces cannot install into the system prefix. Build the
+  # executable here, then copy it into the project directory below.
+  cmake --build . --target telegram-bot-api -j 2
   cd ../..
   mkdir -p telegram-bot-api
   cp ./td/build/telegram-bot-api telegram-bot-api/telegram-bot-api 2>/dev/null || \
