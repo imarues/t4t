@@ -1,5 +1,6 @@
 { pkgs }: {
   deps = [
+    pkgs.bash
     pkgs.python3
     pkgs.python3Packages.pip
     pkgs.aria2

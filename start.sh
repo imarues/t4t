@@ -13,7 +13,7 @@ echo "==> تشغيل سيرفر Telegram Bot API المحلي على المنف�
   --local \
   --http-port=8081 \
   --dir=./tg-bot-api-data \
-  --log=./tg-bot-api-data/log.txt &
+  --log=./log.txt &
 
 BOT_API_PID=$!
 

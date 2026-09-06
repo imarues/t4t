@@ -8,3 +8,35 @@ BOT_API_BASE = "http://127.0.0.1:8081"
 [nix]
 channel = "stable-25_05"
 packages = ["freetype", "gitFull", "lcms2", "libaom", "libde265", "libheif", "libimagequant", "libjpeg", "libtiff", "libwebp", "libxcrypt", "nasm", "openjpeg", "playwright-driver", "tcl", "tk", "x265", "zlib"]
+
+[userenv]
+
+[userenv.shared]
+ALLOWED_USER_IDS = "5036902759,5335780465"
+
+[workflows]
+runButton = "Project"
+
+[[workflows.workflow]]
+name = "Project"
+mode = "parallel"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Telegram bot"
+
+[[workflows.workflow]]
+name = "Telegram bot"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "bash start.sh"
+
+[workflows.workflow.metadata]
+outputType = "console"
+
+[[ports]]
+localPort = 8081
+externalPort = 80
