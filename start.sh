@@ -36,6 +36,6 @@ for i in $(seq 1 30); do
 done
 
 echo "==> تشغيل البوت..."
-python3 bot.py &
+python3 -c 'import aiohttp.web, runpy; runpy.run_path("bot.py", run_name="__main__")' &
 BOT_PID=$!
 wait "$BOT_PID"
