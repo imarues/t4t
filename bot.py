@@ -2790,6 +2790,38 @@ def request_shutdown() -> None:
     shutdown_event.set()
 
 
+KEEPALIVE_HOST = os.getenv("KEEPALIVE_HOST", "0.0.0.0")
+KEEPALIVE_PORT = int(os.getenv("PORT", os.getenv("KEEPALIVE_PORT", "3000")))
+STARTED_AT = time.time()
+
+
+async def _health_handler(request: aiohttp.web.Request) -> aiohttp.web.Response:
+    uptime = max(0, int(time.time() - STARTED_AT))
+    return aiohttp.web.json_response({
+        "ok": True,
+        "service": "t4t-bot",
+        "uptime_seconds": uptime,
+    })
+
+
+async def start_keepalive_server():
+    # Replit exposes the process listening on $PORT. Cloudflare can ping
+    # /health periodically while the bot continues its Telegram long-polling.
+    from aiohttp import web
+
+    app = web.Application()
+    app.router.add_get("/", _health_handler)
+    app.router.add_get("/health", _health_handler)
+    app.router.add_get("/ping", _health_handler)
+
+    runner = web.AppRunner(app)
+    await runner.setup()
+    site = web.TCPSite(runner, KEEPALIVE_HOST, KEEPALIVE_PORT)
+    await site.start()
+    print(f"Keep-alive server listening on {KEEPALIVE_HOST}:{KEEPALIVE_PORT}", flush=True)
+    return runner
+
+
 async def main() -> None:
     loop = asyncio.get_running_loop()
     for sig in (signal.SIGTERM, signal.SIGINT):
@@ -2797,7 +2829,12 @@ async def main() -> None:
             loop.add_signal_handler(sig, request_shutdown)
         except NotImplementedError:
             pass
-    await polling_loop()
+
+    keepalive_runner = await start_keepalive_server()
+    try:
+        await polling_loop()
+    finally:
+        await keepalive_runner.cleanup()
 
 
 if __name__ == "__main__":
