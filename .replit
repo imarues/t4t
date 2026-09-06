@@ -38,5 +38,5 @@ args = "bash start.sh"
 outputType = "console"
 
 [[ports]]
-localPort = 8081
+localPort = 3000
 externalPort = 80
